@@ -1,0 +1,42 @@
+.container-card {
+  width: 250px;
+}
+
+.charCard {
+  box-shadow: 1px 1px 8px rgba(0, 0, 0, 0.541);
+  border-radius: 5px;
+  padding: 15px;
+  margin: 15px;
+  width: 220px;
+  position: relative;
+}
+
+.charCard:hover {
+  width: 231px;
+  margin: 5px;
+  transform: translate(3px, 3px);
+}
+
+.charCard--alive {
+  color: #4d9230;
+  background-color: #78b95d;
+}
+.charCard--alive img {
+  border: 3px solid #467a54;
+}
+.charCard--dead {
+  color: #aa3838;
+  background-color: #d76d6d;
+}
+.charCard--dead img {
+  border: 3px solid #3b2428;
+}
+
+.estrela {
+  font-size: 20px;
+  position: absolute;
+  font-size: 25px;
+  position: absolute;
+  right: 7px;
+  top: 10px;
+}

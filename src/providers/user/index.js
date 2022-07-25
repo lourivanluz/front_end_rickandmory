@@ -18,7 +18,6 @@ export const UserProvider = ({ children }) => {
     api
       .post("/api/v1/login", { email, password })
       .then((response) => {
-        console.log(response);
         const { token } = response.data;
         const { sub } = jwt_decote(token);
         localStorage.clear();
@@ -31,7 +30,6 @@ export const UserProvider = ({ children }) => {
   };
 
   const createAccount = (userInput) => {
-    console.log(userInput);
     api
       .post("/api/v1/users", userInput)
       .then((_) => {

@@ -1,0 +1,30 @@
+.infocard {
+  max-width: 860px;
+  text-align: left;
+  flex-direction: column;
+  color: black;
+  padding: 25px;
+  width: 80%;
+  position: relative;
+  border-radius: 25px;
+}
+.infocard li {
+  margin: 5px 0 15px 0;
+}
+.imgCardInfo {
+  border-radius: 50%;
+  width: 90%;
+  max-width: 310px;
+}
+
+.infocard span {
+  font-size: 32px;
+}
+
+@media (min-width: 940px) {
+  .imgCardInfo {
+    position: absolute;
+    top: 25px;
+    right: 25px;
+  }
+}
