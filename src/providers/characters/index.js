@@ -13,7 +13,7 @@ export const CharacterProvider = ({ children }) => {
   const [currentPage, setCurrentPage] = useState(1);
 
   useEffect(() => {
-    const token = JSON.parse(localStorage.getItem("@kenzieHub:token:"));
+    const token = JSON.parse(localStorage.getItem("@RaM:token:")) || "";
     if (token) {
       const { sub } = jwtDecode(token);
       pullFavoritesCharacters(sub, token);
@@ -93,7 +93,7 @@ export const CharacterProvider = ({ children }) => {
   };
 
   const save = () => {
-    const token = JSON.parse(localStorage.getItem("@kenzieHub:token:"));
+    const token = JSON.parse(localStorage.getItem("@RaM:token:"));
     const { sub } = jwtDecode(token);
 
     api

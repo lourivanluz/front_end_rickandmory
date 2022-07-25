@@ -9,7 +9,7 @@ export const useUser = () => useContext(UserContext);
 
 export const UserProvider = ({ children }) => {
   const [isAuthenticated, setIsAuthenticated] = useState(
-    localStorage.getItem("@kenzieHub:token:") || ""
+    localStorage.getItem("@RaM:token:") || ""
   );
 
   const history = useHistory();
@@ -21,8 +21,8 @@ export const UserProvider = ({ children }) => {
         const { token } = response.data;
         const { sub } = jwt_decote(token);
         localStorage.clear();
-        localStorage.setItem("@kenzieHub:token:", JSON.stringify(token));
-        localStorage.setItem("@kenzieHub:idUser:", JSON.stringify({ sub }));
+        localStorage.setItem("@RaM:token:", JSON.stringify(token));
+        localStorage.setItem("@RaM:idUser:", JSON.stringify({ sub }));
         setIsAuthenticated(true);
         history.push("/userPage");
       })

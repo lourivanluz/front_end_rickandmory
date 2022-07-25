@@ -14,7 +14,7 @@ const UserPage = () => {
   const [iqual, setIqual] = useState();
 
   useEffect(() => {
-    const token = JSON.parse(localStorage.getItem("@kenzieHub:token:"));
+    const token = JSON.parse(localStorage.getItem("@RaM:token:"));
     if (token) {
       const { sub } = jwtDecode(token);
       pullFavoritesCharacters(sub, token);
