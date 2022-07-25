@@ -9,13 +9,8 @@ import { Characters } from "../../Components/Characters";
 import { ButtonSave } from "../Home/style";
 const UserPage = () => {
   const { isAuthenticated } = useUser();
-  const {
-    currentFavorites,
-    pullFavoritesCharacters,
-    save,
-    favoriteList,
-    characterList,
-  } = useCharacter();
+  const { currentFavorites, pullFavoritesCharacters, save, favoriteList } =
+    useCharacter();
   const [iqual, setIqual] = useState();
 
   useEffect(() => {
@@ -43,8 +38,8 @@ const UserPage = () => {
 
   return (
     <DivStyled>
-      <NavBar />
-      <Characters data={characterList.filter((item) => item.favorite)} />
+      <NavBar iqual={iqual} />
+      <Characters data={favoriteList} />
 
       {!iqual ? (
         <ButtonSave

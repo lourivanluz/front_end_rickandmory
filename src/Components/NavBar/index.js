@@ -3,7 +3,7 @@ import { useHistory } from "react-router";
 import { ButtonMenuDrop, ButtonsDefult } from "./../Buttons";
 import { useUser } from "../../providers/user";
 
-export const NavBar = () => {
+export const NavBar = ({ iqual }) => {
   const history = useHistory();
   const { isAuthenticated } = useUser();
 

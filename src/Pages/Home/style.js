@@ -1,7 +1,8 @@
-import { Box, styled } from "@mui/system";
+import { Box, styled as MU } from "@mui/system";
 import { Button } from "@mui/material/";
+import styled from "styled-components";
 
-export const Container = styled(Box)`
+export const Container = MU(Box)`
   width: 100%;
   max-width: 1080px;
   min-height: 100vh;
@@ -10,13 +11,13 @@ export const Container = styled(Box)`
   background-color: var(--light-Color);
 `;
 
-export const Caixinha = styled(Box)`
+export const Caixinha = MU(Box)`
   width: 400px;
   height: 800px;
   background-color: red;
 `;
 
-export const ButtonSave = styled(Button)`
+export const ButtonSave = MU(Button)`
   height: 30px;
   padding: ${({ padding = "16px" }) => padding};
   color: ${({ fontcolor = "#057d9f" }) => fontcolor};
@@ -31,4 +32,38 @@ export const ButtonSave = styled(Button)`
     color: ${({ hovercolor = "white" }) => hovercolor};
     border: ${({ hoverborder = "none" }) => hoverborder};
   }
+`;
+
+export const PageButtonLeft = styled.div`
+  width: 40px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  height: 40px;
+  font-size: 30px;
+  padding: 5px;
+  border-radius: 2px;
+  border: none;
+  background-color: transparent;
+  position: absolute;
+  left: 80px;
+  top: 50%;
+  cursor: pointer;
+`;
+
+export const PageButtonRight = styled.div`
+  width: 40px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  height: 40px;
+  font-size: 30px;
+  padding: 5px;
+  border-radius: 2px;
+  border: none;
+  background-color: transparent;
+  position: absolute;
+  right: 80px;
+  top: 50%;
+  cursor: pointer;
 `;

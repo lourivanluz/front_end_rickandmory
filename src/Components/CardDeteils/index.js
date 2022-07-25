@@ -1,4 +1,3 @@
-import { useState } from "react";
 import { useCharacter } from "../../providers/characters";
 import { useUser } from "../../providers/user";
 import "./style.css";
@@ -13,14 +12,6 @@ export function CardDeteils({ props }) {
     Localização: props.location.name,
     "Planeta de origem": props.origin.name,
   };
-
-  // criar no provider um add e um remove o favorito da lista de favorito
-
-  //a cada click no botao de favoritar deve
-  //ver qual o status do favorito
-  //se falso quer dizer que o cara quer favoritar, entao pega a funçao de adicionar na lista de favoritos
-  // comparar a atual lista de favoritos com a baixada primeiro, se forem diferentes deve apracer
-  //um botao de save, so ai envia a lista de favoritos para o db
 
   const handleFavorite = () => {
     const { id, ...character } = props;

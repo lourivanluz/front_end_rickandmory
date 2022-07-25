@@ -21,7 +21,7 @@ export const CharacterProvider = ({ children }) => {
   }, []);
 
   useEffect(() => {
-    pullCharacters();
+    pullCharacters(currentPage);
   }, [favoriteList]);
 
   const pullFavoritesCharacters = (id, token) => {
@@ -30,18 +30,38 @@ export const CharacterProvider = ({ children }) => {
         headers: { Authorization: `Bearer ${token}` },
       })
       .then(({ data }) => {
-        setFavoriteList(data);
-        setCurrentFavorites(data);
+        const attList = data.map((item) => {
+          return { ...item, favorite: true };
+        });
+        setFavoriteList(attList);
+        setCurrentFavorites(attList);
         return data;
       })
       .catch((error) => console.log(error));
   };
 
-  const pullCharacters = () => {
+  const pullCharacters = (currentPage) => {
     api
       .get(`https://rickandmortyapi.com/api/character?page=${currentPage}`)
       .then(({ data }) => {
         const favoriteNames = favoriteList.map((item) => item.name);
+        const attList = data.results.map((item) => {
+          if (favoriteNames.includes(item.name)) {
+            return { ...item, favorite: true };
+          }
+          return { ...item, favorite: false };
+        });
+        setCharacterList(attList);
+      })
+      .catch((error) => console.log(error));
+  };
+
+  const filterCharacters = (field, value) => {
+    api
+      .get(`https://rickandmortyapi.com/api/character/?${field}=${value}`)
+      .then(({ data }) => {
+        const favoriteNames = favoriteList.map((item) => item.name);
+        console.log(favoriteNames);
         const attList = data.results.map((item) => {
           if (favoriteNames.includes(item.name)) {
             return { ...item, favorite: true };
@@ -65,11 +85,11 @@ export const CharacterProvider = ({ children }) => {
 
   const nextPage = () => {
     if (currentPage < 42) setCurrentPage(currentPage + 1);
-    pullCharacters();
+    pullCharacters(currentPage + 1);
   };
   const prevPage = () => {
     if (currentPage >= 2) setCurrentPage(currentPage - 1);
-    pullCharacters();
+    pullCharacters(currentPage - 1);
   };
 
   const save = () => {
@@ -99,6 +119,7 @@ export const CharacterProvider = ({ children }) => {
         removeFavorite,
         nextPage,
         prevPage,
+        filterCharacters,
       }}
     >
       {children}
