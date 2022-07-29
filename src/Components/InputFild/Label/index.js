@@ -7,5 +7,5 @@ export const Label = styled.label`
   left: 8px;
   color: grey;
   transition: all linear 0.1s;
-  background-color: ${({ backgroundColor = "white" }) => backgroundColor}; ;
+  background-color: ${({ backgroundColor = "white" }) => backgroundColor};
 `;

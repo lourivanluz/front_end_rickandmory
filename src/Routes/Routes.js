@@ -2,6 +2,7 @@ import { Route, Switch } from "react-router";
 import Home from "../Pages/Home";
 import Login from "../Pages/Login";
 import Register from "../Pages/Register";
+import { TestPage } from "../Pages/testComponent";
 import UserPage from "../Pages/UserPage";
 import { MainStyled } from "./../Components/Pagebase";
 
@@ -20,6 +21,9 @@ const Routes = () => {
         </Route>
         <Route path="/userPage">
           <UserPage />
+        </Route>
+        <Route path="/teste">
+          <TestPage />
         </Route>
       </Switch>
     </MainStyled>
