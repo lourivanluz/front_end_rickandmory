@@ -1,13 +1,18 @@
 import { Container, NavBarStyled } from "./style";
 import { useHistory } from "react-router";
-import { ButtonMenuDrop, ButtonsDefult } from "./../Buttons";
 import { useUser } from "../../providers/user";
+import { BaseButton } from "../BaseButton";
+
+import { useState } from "react";
+import { ButtonDrop } from "../ButtonDrop";
 
 export const NavBar = ({ iqual }) => {
   const history = useHistory();
-  const { isAuthenticated } = useUser();
+  const [show, setShow] = useState();
+  const { isAuthenticated, logout } = useUser();
 
   const handleRoute = (path) => {
+    setShow(false);
     history.push(path);
   };
 
@@ -18,35 +23,34 @@ export const NavBar = ({ iqual }) => {
         <nav>
           <ul>
             <li>
-              <ButtonsDefult
-                fontcolor={"#4b9fb7"}
-                border={"none"}
-                onClick={() => handleRoute("/")}
-              >
+              <BaseButton borderRadius={"0"} func={handleRoute} param={"/"}>
                 Home
-              </ButtonsDefult>
+              </BaseButton>
             </li>
             <li>
-              <ButtonsDefult
-                fontcolor={"#4b9fb7"}
-                border={"none"}
-                onClick={() => handleRoute("/register")}
+              <BaseButton
+                borderRadius={"0"}
+                func={handleRoute}
+                param={"/register"}
               >
                 Cadastre-se
-              </ButtonsDefult>
+              </BaseButton>
             </li>
             <li>
-              <ButtonsDefult
-                fontcolor={"#4b9fb7"}
-                border={"none"}
-                onClick={() => handleRoute("/login")}
+              <BaseButton
+                borderRadius={"0"}
+                func={handleRoute}
+                param={"/login"}
               >
                 {isAuthenticated ? "Outra conta" : "Login"}
-              </ButtonsDefult>
+              </BaseButton>
             </li>
             {isAuthenticated && (
               <li>
-                <ButtonMenuDrop />
+                <ButtonDrop title={"Dashboard"} set={setShow} show={show}>
+                  <li onClick={logout}>Logout</li>
+                  <li onClick={() => handleRoute("/userPage")}>Dashboard</li>
+                </ButtonDrop>
               </li>
             )}
           </ul>

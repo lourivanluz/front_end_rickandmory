@@ -1,6 +1,3 @@
-import { Box } from "@mui/system";
-import { styled as MU } from "@mui/material/styles";
-
 import styled from "styled-components";
 
 export const NavBarStyled = styled.div`
@@ -18,7 +15,8 @@ export const NavBarStyled = styled.div`
 export const Container = styled.div`
   box-shadow: 1px 5px 9px -2px rgba(5, 5, 5, 0.41);
   padding: 15px;
-  position: absolute;
+  position: sticky;
+  z-index: 7;
   height: 53px;
   top: 0;
   left: 0;

@@ -1,16 +1,16 @@
-import { NavBar } from "../../Components/NavBar";
 import { Container, FormContainer } from "./style";
 import { useHistory } from "react-router";
 import { InputFild } from "../../Components/InputFild";
-import { ButtonsDefult } from "../../Components/Buttons";
 import { useForm } from "react-hook-form";
 import { yupResolver } from "@hookform/resolvers/yup";
 import * as yup from "yup";
 import { useUser } from "../../providers/user";
+import { BaseButton } from "../../Components/BaseButton";
+import { Loading } from "../../Components/Loading";
 
 const Login = () => {
   const history = useHistory();
-  const { loginAccount } = useUser();
+  const { loginAccount, showLoad, setShowLoad } = useUser();
 
   const handleClick = (path) => {
     history.push(path);
@@ -30,12 +30,12 @@ const Login = () => {
   });
 
   const onFormSubmit = (data) => {
+    setShowLoad(true);
     loginAccount(data);
   };
 
   return (
     <Container>
-      <NavBar />
       <FormContainer>
         <div className="titleForm">
           <h1>Login</h1>
@@ -71,16 +71,16 @@ const Login = () => {
               </label>
               <span>Esqueceu a senha ou email ?</span>
             </div>
-
-            <ButtonsDefult
+            <BaseButton
               type={"submit"}
-              borderradius={"15px"}
-              hoverbcolor={"#057d9f"}
-              hovercolor={"white"}
-              hoverborder={"1px solid #057d9f"}
+              title={"login"}
+              borderRadius={"15"}
+              hoverBg={"#057d9f"}
+              width={"90"}
+              border={"1px solid #057d9f"}
             >
-              Login
-            </ButtonsDefult>
+              {showLoad && <Loading />}
+            </BaseButton>
           </form>
           <div className=" divider">
             <div></div>

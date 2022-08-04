@@ -1,7 +1,7 @@
 import styled from "styled-components";
 
 export const ModalDrawContainer = styled.div`
-  width: 250px;
+  width: 200px;
   text-align: center;
   border-radius: 0px 0px 5px 5px;
   background-color: white;
@@ -14,9 +14,13 @@ export const ModalDrawContainer = styled.div`
 
   ul {
     padding-top: 10px;
+    flex-direction: column;
+    padding: 0px 5px;
+
     li {
       padding: 10px 5px;
       border-bottom: 1px solid lightgrey;
+      width: 100%;
       cursor: pointer;
       &:hover {
         color: black;

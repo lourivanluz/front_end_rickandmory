@@ -1,6 +1,6 @@
 import styled from "styled-components";
 export const DivStyled = styled.div`
-  padding: 80px 20px;
+  padding: 0px 20px;
   width: 100%;
   max-width: 1080px;
   min-height: 100vh;

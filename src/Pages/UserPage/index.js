@@ -1,17 +1,21 @@
 import { Redirect } from "react-router";
-import { NavBar } from "../../Components/NavBar";
 import { DivStyled } from "./style";
 import { useUser } from "../../providers/user";
 import { useCharacter } from "../../providers/characters";
-import { useEffect, useState } from "react";
+import { useEffect } from "react";
 import jwtDecode from "jwt-decode";
 import { Characters } from "../../Components/Characters";
-import { ButtonSave } from "../Home/style";
+import { ButtonSave, ContainerSave } from "../Home/style";
 const UserPage = () => {
   const { isAuthenticated } = useUser();
-  const { currentFavorites, pullFavoritesCharacters, save, favoriteList } =
-    useCharacter();
-  const [iqual, setIqual] = useState();
+  const {
+    currentFavorites,
+    pullFavoritesCharacters,
+    save,
+    favoriteList,
+    compareFavoriteCurrentLists,
+    iqualFavoriteCurrent,
+  } = useCharacter();
 
   useEffect(() => {
     const token = JSON.parse(localStorage.getItem("@RaM:token:"));
@@ -22,14 +26,7 @@ const UserPage = () => {
   }, []);
 
   useEffect(() => {
-    const favoriteNames = JSON.stringify(
-      favoriteList.map((item) => item.name).sort()
-    );
-    const currentFavNames = JSON.stringify(
-      currentFavorites.map((item) => item.name).sort()
-    );
-    const isIqual = favoriteNames === currentFavNames;
-    setIqual(isIqual);
+    compareFavoriteCurrentLists();
   }, [currentFavorites]);
 
   if (!isAuthenticated) {
@@ -38,20 +35,12 @@ const UserPage = () => {
 
   return (
     <DivStyled>
-      <NavBar iqual={iqual} />
+      <ContainerSave>
+        {!iqualFavoriteCurrent && (
+          <ButtonSave borderRadius={"0"} func={save} title={"save"} />
+        )}
+      </ContainerSave>
       <Characters data={favoriteList} />
-
-      {!iqual ? (
-        <ButtonSave
-          fontcolor={"#4b9fb7"}
-          border={"none"}
-          onClick={() => save()}
-        >
-          Save
-        </ButtonSave>
-      ) : (
-        <></>
-      )}
     </DivStyled>
   );
 };

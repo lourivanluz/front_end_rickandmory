@@ -10,7 +10,7 @@ export function Characters({ data }) {
   const showInfo = (item) => {
     setIsVisibleInfo(isVisibleInfo ? false : true);
     setCharacterInfo(item);
-    console.log(item);
+    //console.log(item);
   };
 
   return (

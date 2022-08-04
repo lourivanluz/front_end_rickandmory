@@ -21,19 +21,26 @@ export const ButtonStyled = styled.button`
   flex-direction: row;
   justify-content: space-around;
   align-items: center;
+  font-family: var(--font-primary);
+  font-size: 16px;
   text-transform: uppercase;
   letter-spacing: 1px;
+  color: ${({ color = "var(--light-Color)" }) => color};
   cursor: pointer;
-  border: none;
+  border: ${({ border = "none" }) => (border === "none" ? "none" : border)};
+  border-radius: ${({ borderRadius = "7" }) => borderRadius + "px"};
   overflow: hidden;
   background: transparent;
-  color: var(--light-Color);
-  //padding: 30px 60px;
+  padding: 3px 12px;
   width: ${({ width = "fit-content" }) =>
     width === "fit-content" ? "fit-content" : width + `px`};
   height: ${({ height = "fit-content" }) =>
     height === "fit-content" ? "fit-content" : height + `px`};
   z-index: 1;
+  :hover {
+    color: ${({ hoverColor = "white" }) => hoverColor};
+    background-color: ${({ hoverBg = "none" }) => hoverBg};
+  }
   .circle {
     position: absolute;
     border-radius: 50%;

@@ -11,6 +11,7 @@ export const CharacterProvider = ({ children }) => {
   const [favoriteList, setFavoriteList] = useState([]);
   const [currentFavorites, setCurrentFavorites] = useState([]);
   const [currentPage, setCurrentPage] = useState(1);
+  const [iqualFavoriteCurrent, setIqualFavoriteCurrent] = useState();
 
   useEffect(() => {
     const token = JSON.parse(localStorage.getItem("@RaM:token:")) || "";
@@ -35,7 +36,6 @@ export const CharacterProvider = ({ children }) => {
         });
         setFavoriteList(attList);
         setCurrentFavorites(attList);
-        return data;
       })
       .catch((error) => console.log(error));
   };
@@ -44,14 +44,15 @@ export const CharacterProvider = ({ children }) => {
     api
       .get(`https://rickandmortyapi.com/api/character?page=${currentPage}`)
       .then(({ data }) => {
-        const favoriteNames = favoriteList.map((item) => item.name);
+        const favoriteNamesCurrent = currentFavorites.map((item) => item.name);
         const attList = data.results.map((item) => {
-          if (favoriteNames.includes(item.name)) {
+          if (favoriteNamesCurrent.includes(item.name)) {
             return { ...item, favorite: true };
           }
           return { ...item, favorite: false };
         });
         setCharacterList(attList);
+        console.log("pull dos personagens da api e mudança feita");
       })
       .catch((error) => console.log(error));
   };
@@ -81,6 +82,17 @@ export const CharacterProvider = ({ children }) => {
   const removeFavorite = ({ name }) => {
     const filtred = currentFavorites.filter((item) => item.name !== name);
     setCurrentFavorites([...filtred]);
+  };
+
+  const compareFavoriteCurrentLists = () => {
+    const favoriteNames = JSON.stringify(
+      favoriteList.map((item) => item.name).sort()
+    );
+    const currentFavNames = JSON.stringify(
+      currentFavorites.map((item) => item.name).sort()
+    );
+    const isIqual = favoriteNames === currentFavNames;
+    setIqualFavoriteCurrent(isIqual);
   };
 
   const nextPage = () => {
@@ -120,6 +132,9 @@ export const CharacterProvider = ({ children }) => {
         nextPage,
         prevPage,
         filterCharacters,
+        compareFavoriteCurrentLists,
+        setIqualFavoriteCurrent,
+        iqualFavoriteCurrent,
       }}
     >
       {children}

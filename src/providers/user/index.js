@@ -13,6 +13,7 @@ export const UserProvider = ({ children }) => {
   );
 
   const history = useHistory();
+  const [showLoad, setShowLoad] = useState(false);
 
   const loginAccount = ({ email, password }) => {
     api
@@ -25,8 +26,18 @@ export const UserProvider = ({ children }) => {
         localStorage.setItem("@RaM:idUser:", JSON.stringify({ sub }));
         setIsAuthenticated(true);
         history.push("/userPage");
+        setShowLoad(false);
       })
-      .catch((_) => console.log("edeu erro"));
+      .catch((_) => {
+        console.log("edeu erro");
+        setShowLoad(false);
+      });
+  };
+
+  const logout = () => {
+    setIsAuthenticated("");
+    localStorage.removeItem("@RaM:token:");
+    localStorage.removeItem("@RaM:idUser:");
   };
 
   const createAccount = (userInput) => {
@@ -43,8 +54,10 @@ export const UserProvider = ({ children }) => {
       value={{
         createAccount,
         loginAccount,
-        setIsAuthenticated,
+        logout,
         isAuthenticated,
+        showLoad,
+        setShowLoad,
       }}
     >
       {children}
