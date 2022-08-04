@@ -1,28 +1,35 @@
 import { ButtonStyled } from "./style";
 
-export const BaseButton = ({ title }) => {
+export const BaseButton = ({ children, ...ress }) => {
   function handleClick(event) {
-    const buttonPosition = event.target.getBoundingClientRect();
+    const button = event.target;
+    const buttonPosition = button.getBoundingClientRect();
+
+    const element = document.createElement("span");
+    element.classList.add("circle");
+    element.classList.add("circle-active");
+    button.insertAdjacentElement("beforeend", element);
 
     const x = Math.abs(buttonPosition.left - event.clientX);
     const y = Math.abs(buttonPosition.top - event.clientY);
-    const element = document.querySelector(".circle");
-    element.classList.add("circle-active");
     element.style.left = `${x}px`;
     element.style.top = `${y}px`;
-    console.log(title);
 
     function limpaEfeito() {
       element.removeEventListener("animationend", limpaEfeito);
       element.classList.remove("circle-active");
+      element.remove();
     }
     element.addEventListener("animationend", limpaEfeito);
+    if (ress.set || ress.show) {
+      ress.set(!ress.show);
+    }
   }
 
   return (
-    <ButtonStyled onClick={(event) => handleClick(event)} title={title}>
-      {title}
-      <span className="circle"></span>
+    <ButtonStyled onClick={(event) => handleClick(event)} {...ress}>
+      {ress.title}
+      {children}
     </ButtonStyled>
   );
 };

@@ -1,8 +1,8 @@
 import { ModalDrawContainer } from "./style";
 
-export const ModalDraw = ({ children }) => {
+export const ModalDraw = ({ children, ...ress }) => {
   return (
-    <ModalDrawContainer>
+    <ModalDrawContainer {...ress}>
       <ul>{children}</ul>
     </ModalDrawContainer>
   );

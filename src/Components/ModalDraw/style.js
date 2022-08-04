@@ -7,11 +7,10 @@ export const ModalDrawContainer = styled.div`
   background-color: white;
   position: absolute;
   right: 0;
-  top: 50px;
+  top: ${({ height = "30" }) => height + "px"};
   -webkit-animation: scale-up-tr 0.2s cubic-bezier(0.39, 0.575, 0.565, 1) both;
   animation: scale-up-tr 0.2s cubic-bezier(0.39, 0.575, 0.565, 1) both;
   box-shadow: 0px 4px 4px rgba(0, 0, 0, 0.5);
-  margin-right: 10px;
 
   ul {
     padding-top: 10px;

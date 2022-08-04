@@ -17,6 +17,10 @@ const ripple = keyframes`
 
 export const ButtonStyled = styled.button`
   position: relative;
+  display: flex;
+  flex-direction: row;
+  justify-content: space-around;
+  align-items: center;
   text-transform: uppercase;
   letter-spacing: 1px;
   cursor: pointer;
@@ -24,8 +28,11 @@ export const ButtonStyled = styled.button`
   overflow: hidden;
   background: transparent;
   color: var(--light-Color);
-  padding: 30px 60px;
-  border: blue 1px solid;
+  //padding: 30px 60px;
+  width: ${({ width = "fit-content" }) =>
+    width === "fit-content" ? "fit-content" : width + `px`};
+  height: ${({ height = "fit-content" }) =>
+    height === "fit-content" ? "fit-content" : height + `px`};
   z-index: 1;
   .circle {
     position: absolute;

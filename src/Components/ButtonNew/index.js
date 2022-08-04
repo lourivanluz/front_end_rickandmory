@@ -2,26 +2,18 @@ import { useState } from "react";
 import { ButtonStyled, DivStyled } from "./style";
 import { MdKeyboardArrowDown } from "react-icons/md";
 import { ModalDraw } from "../ModalDraw";
+import { BaseButton } from "../BaseButton";
 
-export const ButtonDrop = () => {
+export const ButtonDrop = ({ children, ...ress }) => {
   const [show, setShow] = useState(null);
   return (
     <DivStyled>
-      <ButtonStyled
-        onClick={() => {
-          setShow(!show);
-        }}
-      >
-        mostrar
+      <BaseButton {...ress} set={setShow} show={show}>
+        Mostrar
         <MdKeyboardArrowDown />
-      </ButtonStyled>
+      </BaseButton>
 
-      {show && (
-        <ModalDraw>
-          <li>login</li>
-          <li>testando</li>
-        </ModalDraw>
-      )}
+      {show && <ModalDraw {...ress}>{children}</ModalDraw>}
     </DivStyled>
   );
 };
