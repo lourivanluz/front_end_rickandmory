@@ -5,19 +5,28 @@ import { BaseButton } from "../BaseButton";
 
 import { useState } from "react";
 import { ButtonDrop } from "../ButtonDrop";
+import { ModalDialog } from "../ModalDialog";
+import { useCharacter } from "../../providers/characters";
 
-export const NavBar = ({ iqual }) => {
+export const NavBar = () => {
   const history = useHistory();
   const [show, setShow] = useState();
+  const [showModal, setShowModal] = useState(false);
   const { isAuthenticated, logout } = useUser();
+  const { iqualFavoriteCurrent } = useCharacter();
 
   const handleRoute = (path) => {
-    setShow(false);
-    history.push(path);
+    if (iqualFavoriteCurrent || path === "/") {
+      setShow(false);
+      history.push(path);
+    } else {
+      setShowModal(true);
+    }
   };
 
   return (
     <Container>
+      {showModal && <ModalDialog setShowModal={setShowModal} />}
       <NavBarStyled>
         <div>logo</div>
         <nav>
@@ -48,8 +57,8 @@ export const NavBar = ({ iqual }) => {
             {isAuthenticated && (
               <li>
                 <ButtonDrop title={"Dashboard"} set={setShow} show={show}>
-                  <li onClick={logout}>Logout</li>
                   <li onClick={() => handleRoute("/userPage")}>Dashboard</li>
+                  <li onClick={logout}>Logout</li>
                 </ButtonDrop>
               </li>
             )}

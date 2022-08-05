@@ -30,13 +30,12 @@ export const ButtonStyled = styled.button`
   border: ${({ border = "none" }) => (border === "none" ? "none" : border)};
   border-radius: ${({ borderRadius = "7" }) => borderRadius + "px"};
   overflow: hidden;
-  background: transparent;
+  background: ${({ bg = "transparent" }) => bg};
   padding: 3px 12px;
   width: ${({ width = "fit-content" }) =>
     width === "fit-content" ? "fit-content" : width + `px`};
   height: ${({ height = "fit-content" }) =>
     height === "fit-content" ? "fit-content" : height + `px`};
-  z-index: 1;
   :hover {
     color: ${({ hoverColor = "white" }) => hoverColor};
     background-color: ${({ hoverBg = "none" }) => hoverBg};
@@ -47,7 +46,6 @@ export const ButtonStyled = styled.button`
     background-color: #fff;
     pointer-events: none;
     transform: translate(-50%, -50%);
-    z-index: 7;
   }
   .circle-active {
     animation: ${ripple} 0.5s ease-in;

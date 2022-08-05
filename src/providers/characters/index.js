@@ -11,40 +11,42 @@ export const CharacterProvider = ({ children }) => {
   const [favoriteList, setFavoriteList] = useState([]);
   const [currentFavorites, setCurrentFavorites] = useState([]);
   const [currentPage, setCurrentPage] = useState(1);
-  const [iqualFavoriteCurrent, setIqualFavoriteCurrent] = useState();
+  const [iqualFavoriteCurrent, setIqualFavoriteCurrent] = useState(null);
 
   useEffect(() => {
-    const token = JSON.parse(localStorage.getItem("@RaM:token:")) || "";
-    if (token) {
-      const { sub } = jwtDecode(token);
-      pullFavoritesCharacters(sub, token);
-    }
+    pullFavoritesCharacters().then((data) => pullCharacters(1, data));
   }, []);
 
-  useEffect(() => {
-    pullCharacters(currentPage);
-  }, [favoriteList]);
-
-  const pullFavoritesCharacters = (id, token) => {
-    api
-      .get(`api/v1/users/${id}/favorites`, {
-        headers: { Authorization: `Bearer ${token}` },
-      })
-      .then(({ data }) => {
-        const attList = data.map((item) => {
-          return { ...item, favorite: true };
-        });
-        setFavoriteList(attList);
-        setCurrentFavorites(attList);
-      })
-      .catch((error) => console.log(error));
+  const pullFavoritesCharacters = async () => {
+    console.log("pullFavoritesCharacters");
+    const token = JSON.parse(localStorage.getItem("@RaM:token:")) || "";
+    const sub = JSON.parse(localStorage.getItem("@RaM:idUser:")) || "";
+    if (sub && token) {
+      return await api
+        .get(`api/v1/users/${sub}/favorites`, {
+          headers: { Authorization: `Bearer ${token}` },
+        })
+        .then(({ data }) => {
+          const attList = data.map((item) => {
+            return { ...item, favorite: true };
+          });
+          setFavoriteList(attList);
+          setCurrentFavorites(attList);
+          setIqualFavoriteCurrent(true);
+          return data;
+        })
+        .catch((error) => console.log(error));
+    }
   };
 
-  const pullCharacters = (currentPage) => {
-    api
-      .get(`https://rickandmortyapi.com/api/character?page=${currentPage}`)
+  const pullCharacters = async (
+    page = currentPage,
+    curFavorite = currentFavorites
+  ) => {
+    await api
+      .get(`https://rickandmortyapi.com/api/character?page=${page}`)
       .then(({ data }) => {
-        const favoriteNamesCurrent = currentFavorites.map((item) => item.name);
+        const favoriteNamesCurrent = curFavorite.map((item) => item.name);
         const attList = data.results.map((item) => {
           if (favoriteNamesCurrent.includes(item.name)) {
             return { ...item, favorite: true };
@@ -52,7 +54,6 @@ export const CharacterProvider = ({ children }) => {
           return { ...item, favorite: false };
         });
         setCharacterList(attList);
-        console.log("pull dos personagens da api e mudança feita");
       })
       .catch((error) => console.log(error));
   };
@@ -96,6 +97,7 @@ export const CharacterProvider = ({ children }) => {
   };
 
   const nextPage = () => {
+    console.log("chamou ?");
     if (currentPage < 42) setCurrentPage(currentPage + 1);
     pullCharacters(currentPage + 1);
   };
@@ -113,7 +115,7 @@ export const CharacterProvider = ({ children }) => {
         headers: { Authorization: `Bearer ${token}` },
       })
       .then((_) => {
-        pullFavoritesCharacters(sub, token);
+        pullFavoritesCharacters().then((data) => pullCharacters(1, data));
       })
       .catch((error) => console.log(error));
   };
@@ -122,19 +124,19 @@ export const CharacterProvider = ({ children }) => {
     <CharacterContext.Provider
       value={{
         save,
-        currentFavorites,
+        pullCharacters,
         characterList,
-        setCharacterList,
         favoriteList,
-        pullFavoritesCharacters,
         addFavorite,
         removeFavorite,
         nextPage,
         prevPage,
         filterCharacters,
         compareFavoriteCurrentLists,
-        setIqualFavoriteCurrent,
         iqualFavoriteCurrent,
+        currentFavorites,
+        setCurrentFavorites,
+        currentPage,
       }}
     >
       {children}

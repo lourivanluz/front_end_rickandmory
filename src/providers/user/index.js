@@ -23,7 +23,7 @@ export const UserProvider = ({ children }) => {
         const { sub } = jwt_decote(token);
         localStorage.clear();
         localStorage.setItem("@RaM:token:", JSON.stringify(token));
-        localStorage.setItem("@RaM:idUser:", JSON.stringify({ sub }));
+        localStorage.setItem("@RaM:idUser:", JSON.stringify(sub));
         setIsAuthenticated(true);
         history.push("/userPage");
         setShowLoad(false);

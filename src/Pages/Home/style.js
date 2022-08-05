@@ -15,7 +15,7 @@ export const ContainerSave = styled.div`
   display: flex;
   align-items: center;
   justify-content: center;
-  z-index: 15;
+  z-index: 6;
   position: sticky;
   top: 53px;
   margin: 0 auto;

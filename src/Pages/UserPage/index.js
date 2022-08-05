@@ -10,20 +10,10 @@ const UserPage = () => {
   const { isAuthenticated } = useUser();
   const {
     currentFavorites,
-    pullFavoritesCharacters,
     save,
-    favoriteList,
     compareFavoriteCurrentLists,
     iqualFavoriteCurrent,
   } = useCharacter();
-
-  useEffect(() => {
-    const token = JSON.parse(localStorage.getItem("@RaM:token:"));
-    if (token) {
-      const { sub } = jwtDecode(token);
-      pullFavoritesCharacters(sub, token);
-    }
-  }, []);
 
   useEffect(() => {
     compareFavoriteCurrentLists();
@@ -40,7 +30,7 @@ const UserPage = () => {
           <ButtonSave borderRadius={"0"} func={save} title={"save"} />
         )}
       </ContainerSave>
-      <Characters data={favoriteList} />
+      <Characters favorite />
     </DivStyled>
   );
 };

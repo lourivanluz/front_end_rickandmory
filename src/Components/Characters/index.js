@@ -1,22 +1,24 @@
 import { useState } from "react";
+import { useCharacter } from "../../providers/characters";
 import { CardDeteils } from "../CardDeteils";
 import { CharCard } from "../CharCard";
 import "./style.css";
 
-export function Characters({ data }) {
+export function Characters({ favorite }) {
   const [isVisibleInfo, setIsVisibleInfo] = useState(false);
   const [characterInfo, setCharacterInfo] = useState({});
+  const { characterList, favoriteList } = useCharacter();
 
   const showInfo = (item) => {
     setIsVisibleInfo(isVisibleInfo ? false : true);
     setCharacterInfo(item);
-    //console.log(item);
   };
+  const list = favorite ? favoriteList : characterList;
 
   return (
     <>
       <ul className="cardList">
-        {data.map((item) => (
+        {list.map((item) => (
           <li key={item.id} onClick={() => showInfo(item)}>
             <CharCard props={item} />
           </li>

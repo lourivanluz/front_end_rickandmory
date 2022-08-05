@@ -1,7 +1,6 @@
 import { Container, FormContainer } from "./style";
 import { useHistory } from "react-router";
 import { InputFild } from "../../Components/InputFild";
-import { ButtonsDefult } from "../../Components/Buttons";
 import { yupResolver } from "@hookform/resolvers/yup";
 import { useForm } from "react-hook-form";
 import { schema } from "../../Schema/Schema";

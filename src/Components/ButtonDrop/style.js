@@ -10,7 +10,7 @@ export const ButtonStyled = styled.button`
   width: ${({ width = "80" }) => `${width}px`};
   height: ${({ height = "30" }) => `${height}px`};
   border: none;
-  border-radius: 5px;
+  border-radius: 0px;
   display: flex;
   align-items: center;
   justify-content: space-between;

@@ -7,19 +7,13 @@ import { SearchBar } from "../../Components/search";
 
 const Home = () => {
   const {
-    favoriteList,
     currentFavorites,
-    characterList,
     save,
     nextPage,
     prevPage,
     iqualFavoriteCurrent,
     compareFavoriteCurrentLists,
   } = useCharacter();
-
-  useEffect(() => {
-    console.log(characterList);
-  }, [characterList]);
 
   useEffect(() => {
     compareFavoriteCurrentLists();
@@ -48,7 +42,7 @@ const Home = () => {
         </NaveButton>
       </ContainerSave>
       <SearchBar />
-      <Characters data={characterList} />
+      <Characters />
     </Container>
   );
 };
