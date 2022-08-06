@@ -114,7 +114,7 @@ export const CharacterProvider = ({ children }) => {
       .post(`api/v1/users/${sub}/favorites`, currentFavorites, {
         headers: { Authorization: `Bearer ${token}` },
       })
-      .then((_) => {
+      .then((response) => {
         pullFavoritesCharacters().then((data) => pullCharacters(1, data));
       })
       .catch((error) => console.log(error));

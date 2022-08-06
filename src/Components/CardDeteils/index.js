@@ -1,6 +1,6 @@
 import { useCharacter } from "../../providers/characters";
 import { useUser } from "../../providers/user";
-import "./style.css";
+import { CardInfoContainer, FavoriteButton, InfoCard } from "./style";
 export function CardDeteils({ props }) {
   const { addFavorite, removeFavorite } = useCharacter();
   const { isAuthenticated } = useUser();
@@ -30,33 +30,25 @@ export function CardDeteils({ props }) {
   }
 
   return (
-    <>
-      <ul
-        className={
-          props.status === "Alive"
-            ? "infocard charCard--alive"
-            : "infocard charCard--dead"
-        }
-      >
+    <CardInfoContainer status={props.status}>
+      <InfoCard>
         {infoList.map((item, index) => (
           <li key={index}>
             <h1>{item[0]}</h1>
             <span>{item[1]}</span>
           </li>
         ))}
-        <li>
-          <img className="imgCardInfo" src={props.image} alt="img card" />
-        </li>
-        <li>
-          {isAuthenticated ? (
-            <button onClick={handleFavorite}>
-              {props.favorite ? "desfavoritar" : "favoritar"}
-            </button>
-          ) : (
-            <></>
-          )}
-        </li>
-      </ul>
-    </>
+      </InfoCard>
+
+      <img src={props.image} alt="img card" />
+
+      <li>
+        {isAuthenticated && (
+          <FavoriteButton func={handleFavorite}>
+            {props.favorite ? "desfavoritar" : "favoritar"}
+          </FavoriteButton>
+        )}
+      </li>
+    </CardInfoContainer>
   );
 }

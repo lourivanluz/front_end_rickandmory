@@ -28,8 +28,8 @@ export const UserProvider = ({ children }) => {
         history.push("/userPage");
         setShowLoad(false);
       })
-      .catch((_) => {
-        console.log("edeu erro");
+      .catch((error) => {
+        console.log(error.response.data);
         setShowLoad(false);
       });
   };

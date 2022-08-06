@@ -2,7 +2,8 @@ import { useState } from "react";
 import { useCharacter } from "../../providers/characters";
 import { CardDeteils } from "../CardDeteils";
 import { CharCard } from "../CharCard";
-import "./style.css";
+import "./style.js";
+import { CardList, Info } from "./style.js";
 
 export function Characters({ favorite }) {
   const [isVisibleInfo, setIsVisibleInfo] = useState(false);
@@ -17,18 +18,18 @@ export function Characters({ favorite }) {
 
   return (
     <>
-      <ul className="cardList">
+      <CardList>
         {list.map((item) => (
           <li key={item.id} onClick={() => showInfo(item)}>
             <CharCard props={item} />
           </li>
         ))}
-        {isVisibleInfo ? (
-          <div className="info" onClick={() => showInfo("")}>
+        {isVisibleInfo && (
+          <Info onClick={() => showInfo("")}>
             <CardDeteils props={characterInfo} />
-          </div>
-        ) : null}
-      </ul>
+          </Info>
+        )}
+      </CardList>
     </>
   );
 }

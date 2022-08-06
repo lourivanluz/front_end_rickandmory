@@ -1,6 +1,6 @@
-import "./style.css";
 import { AiOutlineStar, AiFillStar } from "react-icons/ai";
 import { useUser } from "../../providers/user";
+import { CharCardStyle, ContainerCard } from "./style";
 
 export function CharCard({ props }) {
   const nome =
@@ -9,14 +9,8 @@ export function CharCard({ props }) {
   const { isAuthenticated } = useUser();
 
   return (
-    <div className="container-card">
-      <div
-        className={
-          props.status === "Alive"
-            ? "charCard charCard--alive"
-            : "charCard charCard--dead"
-        }
-      >
+    <ContainerCard>
+      <CharCardStyle status={props.status}>
         <h2>{nome}</h2>
         {isAuthenticated && (
           <div>
@@ -29,7 +23,7 @@ export function CharCard({ props }) {
         )}
 
         <img src={props.image} alt="img card" />
-      </div>
-    </div>
+      </CharCardStyle>
+    </ContainerCard>
   );
 }
