@@ -21,7 +21,8 @@ export const UserProvider = ({ children }) => {
       .then((response) => {
         const { token } = response.data;
         const { sub } = jwt_decote(token);
-        localStorage.clear();
+        localStorage.removeItem("@RaM:token:");
+        localStorage.removeItem("@RaM:idUser:");
         localStorage.setItem("@RaM:token:", JSON.stringify(token));
         localStorage.setItem("@RaM:idUser:", JSON.stringify(sub));
         setIsAuthenticated(true);

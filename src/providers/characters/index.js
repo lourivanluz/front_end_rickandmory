@@ -18,24 +18,35 @@ export const CharacterProvider = ({ children }) => {
   }, []);
 
   const pullFavoritesCharacters = async () => {
-    console.log("pullFavoritesCharacters");
     const token = JSON.parse(localStorage.getItem("@RaM:token:")) || "";
     const sub = JSON.parse(localStorage.getItem("@RaM:idUser:")) || "";
+
     if (sub && token) {
-      return await api
-        .get(`api/v1/users/${sub}/favorites`, {
-          headers: { Authorization: `Bearer ${token}` },
-        })
-        .then(({ data }) => {
-          const attList = data.map((item) => {
-            return { ...item, favorite: true };
+      const now = new Date();
+      const expiredToken = new Date(Number(jwtDecode(token).exp) * 1000);
+      if (expiredToken > now) {
+        return await api
+          .get(`api/v1/users/${sub}/favorites`, {
+            headers: { Authorization: `Bearer ${token}` },
+          })
+          .then(({ data }) => {
+            const attList = data.map((item) => {
+              return { ...item, favorite: true };
+            });
+            setFavoriteList(attList);
+            setCurrentFavorites(attList);
+            setIqualFavoriteCurrent(true);
+            return data;
+          })
+          .catch((error) => {
+            console.log("deu erro", error);
           });
-          setFavoriteList(attList);
-          setCurrentFavorites(attList);
-          setIqualFavoriteCurrent(true);
-          return data;
-        })
-        .catch((error) => console.log(error));
+      } else {
+        //logout
+        localStorage.removeItem("@RaM:token:");
+        localStorage.removeItem("@RaM:idUser:");
+        return [];
+      }
     }
   };
 
@@ -97,7 +108,6 @@ export const CharacterProvider = ({ children }) => {
   };
 
   const nextPage = () => {
-    console.log("chamou ?");
     if (currentPage < 42) setCurrentPage(currentPage + 1);
     pullCharacters(currentPage + 1);
   };
@@ -110,14 +120,23 @@ export const CharacterProvider = ({ children }) => {
     const token = JSON.parse(localStorage.getItem("@RaM:token:"));
     const { sub } = jwtDecode(token);
 
-    api
-      .post(`api/v1/users/${sub}/favorites`, currentFavorites, {
-        headers: { Authorization: `Bearer ${token}` },
-      })
-      .then((response) => {
-        pullFavoritesCharacters().then((data) => pullCharacters(1, data));
-      })
-      .catch((error) => console.log(error));
+    const now = new Date();
+    const expiredToken = new Date(Number(jwtDecode(token).exp) * 1000);
+    console.log(expiredToken > now);
+    if (expiredToken > now) {
+      api
+        .post(`api/v1/users/${sub}/favorites`, currentFavorites, {
+          headers: { Authorization: `Bearer ${token}` },
+        })
+        .then((response) => {
+          pullFavoritesCharacters().then((data) => pullCharacters(1, data));
+        })
+        .catch((error) => console.log(error));
+    } else {
+      //logout
+      localStorage.removeItem("@RaM:token:");
+      localStorage.removeItem("@RaM:idUser:");
+    }
   };
 
   return (

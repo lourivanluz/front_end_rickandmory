@@ -41,7 +41,6 @@ const Home = () => {
           <AiOutlineArrowRight />
         </NaveButton>
       </ContainerSave>
-      <SearchBar />
       <Characters />
     </Container>
   );
