@@ -27,6 +27,7 @@ export const UserProvider = ({ children }) => {
         localStorage.setItem("@RaM:idUser:", JSON.stringify(sub));
         setIsAuthenticated(true);
         history.push("/userPage");
+        window.location.reload()
         setShowLoad(false);
       })
       .catch((error) => {
