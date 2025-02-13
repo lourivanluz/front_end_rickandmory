@@ -3,7 +3,6 @@ import { Characters } from "../../Components/Characters";
 import { useCharacter } from "../../providers/characters";
 import { ButtonSave, Container, ContainerSave, NaveButton } from "./style";
 import { AiOutlineArrowLeft, AiOutlineArrowRight } from "react-icons/ai";
-import { SearchBar } from "../../Components/search";
 
 const Home = () => {
   const {
